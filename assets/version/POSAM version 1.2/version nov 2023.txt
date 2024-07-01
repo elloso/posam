@@ -1,0 +1,15 @@
+Version nov 2023
+
+view/item/all
+controller/item.php
+model_item.php
+
+
+
+//corriger les prix lorsqu'il n'y a pas d'order pour conserver un historique des prix.
+
+UPDATE movement SET order_rate = (SELECT item_price 
+                                  FROM  item_location 
+                                  JOIN item ON item_location.item_fk = item_id
+                                  WHERE  movement.item_location_fk = item_location_id)
+WHERE order_rate is NULL
