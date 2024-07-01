@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Category extends Admin_Controller 
+class Department extends Admin_Controller 
 {
 	public function __construct()
 	{
@@ -10,71 +10,82 @@ class Category extends Admin_Controller
 
 		$this->not_logged_in();
 
-		$this->data['page_title'] = 'Category';
+		$this->data['page_title'] = 'Department';
 
 	}
 
 
-	//--> Redirects to the manage category page
+	//--> Redirects to the manage department page
 
 	public function index()
 	{
+		// var_dump($this->permission);
+		// exit; 
 
-		if(!in_array('viewCategory', $this->permission)) {
+		if(!in_array('viewDepartment', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
 
-		$this->render_template('category/index', $this->data);	
+		$this->render_template('department/index', $this->data);	
 	}	
 
 	
-	//--> It checks if it gets the category id and retrieves
-	//    the category information from the category model and 
+	//--> It checks if it gets the position id and retrieves
+	//    the position information from the position model and 
 	//    returns the data into json format. 
 	//    This function is invoked from the view page.
 	
-	public function fetchCategoryDataById($category_id) 
+	public function fetchDepartmentDataById($department_id) 
 	{
-		if($category_id) {
-			$data = $this->model_category->getCategoryData($category_id);
+		if($department_id) {
+			$data = $this->model_department->getDepartmentData($department_id);
 			echo json_encode($data);
 		}
 
 		return false;
 	}
 
+
+	//-->  For creation of drop-down list 
+
+	public function fetchActiveDepartment() 
+	{
+		$data = $this->model_department->getActivePosition();
+		echo json_encode($data);
+
+	}
+
 	
-	//--> Fetches the category value from the category table 
+	//--> Fetches the position value from the position table 
 	//    This function is called from the datatable ajax function
 	
-	public function fetchCategoryData()
+	public function fetchDepartmentData()
 	{
 		$result = array('data' => array());
 
-		$data = $this->model_category->getCategoryData(); 
+		$data = $this->model_department->getDepartmentData(); 
 
 		foreach ($data as $key => $value) {
 
 			$buttons = '';
-			$category_name = $value['category_name'];
-			$category_remarks = $value['category_remark'];
 
-			if(in_array('updateCategory', $this->permission)) {
-				$buttons .= '<button type="button" class="btn btn-default" onclick="editFunc('.$value['category_id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil"></i></button>';
-				$category_name='  <a data-target="#editModal" onclick="editFunc('.$value['category_id'].')" data-toggle="modal" href="#editModal">'.$value['category_name'].'</a>';
+			$position_name = $value['position_name'];
+
+			if(in_array('updatePosition', $this->permission)) {
+				$buttons .= '<button type="button" class="btn btn-default" onclick="editFunc('.$value['position_id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil"></i></button>';
+				$position_name='  <a data-target="#editModal" onclick="editFunc('.$value['position_id'].')" data-toggle="modal" href="#editModal">'.$value['position_name'].'</a>';
 			}
 
-			if(in_array('deleteCategory', $this->permission)) {
-				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['category_id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
+			if(in_array('deletePosition', $this->permission)) {
+				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['position_id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
 			}
 				
 
 			$active = ($value['active'] == 1) ? '<span class="label label-success">'.'Active'.'</span>' : '<span class="label label-warning">'.'Inactive'.'</span>';
 
-
 			$result['data'][$key] = array(
-				$category_name,
-				$category_remarks,
+				$position_name,
+				$value['position_code'],
 				$active,
 				$buttons
 			);
@@ -84,29 +95,30 @@ class Category extends Admin_Controller
 	}
 
 	
-	//--> It checks the category form validation 
+	//--> It checks the position form validation 
 	//    and if the validation is true (valid) then it inserts the data into the database 
 	//    and returns the json format operation messages
 	
 	public function create()
 	{
-		if(!in_array('createCategory', $this->permission)) {
+		if(!in_array('createPosition', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
 
 		$response = array();
 
-		$this->form_validation->set_rules('category_name', 'Name', 'trim|required');
+		$this->form_validation->set_rules('position_name', 'Name', 'trim|required');
+		$this->form_validation->set_rules('position_code', 'Code', 'trim|required');
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
         if ($this->form_validation->run() == TRUE) {
         	$data = array(
-        		'category_name' => $this->input->post('category_name'),
-				'category_remark' => $this->input->post('category_remark'),
+        		'position_code' => $this->input->post('position_code'),
+        		'position_name' => $this->input->post('position_name'),
         		'active' => $this->input->post('active'),	
         	);
 
-        	$create = $this->model_category->create($data);
+        	$create = $this->model_department->create($data);
         	if($create == true) {
         		$response['success'] = true;
         		$response['messages'] ='Successfully created';
@@ -127,32 +139,33 @@ class Category extends Admin_Controller
 	}
 
 	
-	//--> It checks the category form validation 
+	//--> It checks the position form validation 
 	//    and if the validation is true (valid) then it updates the data into the database 
 	//    and returns the json format operation messages
 	
-	public function update($category_id)
+	public function update($position_id)
 	{
 
-		if(!in_array('updateCategory', $this->permission)) {
+		if(!in_array('updatePosition', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
 
 		$response = '';
 		$response = array();
 
-		if($category_id) {
-			$this->form_validation->set_rules('edit_category_name', 'Name', 'trim|required');
+		if($position_id) {
+			$this->form_validation->set_rules('edit_position_name', $this->lang->line('Name'), 'trim|required');
+			$this->form_validation->set_rules('edit_position_code', 'Code', 'trim|required');
 			$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 	        if ($this->form_validation->run() == TRUE) {
 	        	$data = array(
-	        		'category_name' => $this->input->post('edit_category_name'),
-					'category_remark' => $this->input->post('edit_category_remark'),
+	        		'position_code' => $this->input->post('edit_position_code'),
+	        		'position_name' => $this->input->post('edit_position_name'),
 	        		'active' => $this->input->post('edit_active'),	
 	        	);
 
-	        	$update = $this->model_category->update($data, $category_id);
+	        	$update = $this->model_department->update($data, $position_id);
 	        	if($update == true) {
 	        		$response['success'] = true;
 	        		$response['messages'] = 'Successfully updated';
@@ -178,25 +191,25 @@ class Category extends Admin_Controller
 	}
 
 	
-	//--> It removes the category information from the database 
+	//--> It removes the position information from the database 
 	//    and returns the json format operation messages
 	
 	public function remove()
 	{
-		if(!in_array('deleteCategory', $this->permission)) {
+		if(!in_array('deletePosition', $this->permission)) {
 			redirect('dashboard', 'refresh');}
 		
-		$category_id = $this->input->post('category_id');
+		$position_id = $this->input->post('position_id');
 
         $response = '';
 		$response = array();
 
-		if($category_id) {
+		if($position_id) {
 			//---> Validate if the information is used in another table
-			$total_used = $this->model_category->checkIntegrity($category_id);
+			$total_used = $this->model_department->checkIntegrity($position_id);
 			//---> If no table has this information, we can delete
             if ($total_used == 0) {        
-				$delete = $this->model_category->remove($category_id);
+				$delete = $this->model_department->remove($position_id);
 				if($delete == true) {
 					$response['success'] = true;
 					$response['messages'] = 'Successfully deleted';}

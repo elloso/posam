@@ -130,6 +130,11 @@
                     <a href="<?php echo base_url('position/') ?>">Position</a></li>
                 <?php endif; ?>
 
+                <?php if(in_array('createDepartment', $user_permission) || in_array('updatePosition', $user_permission) || in_array('viewPosition', $user_permission) || in_array('deletePosition', $user_permission)): ?>
+                  <li id="locationNav">
+                    <a href="<?php echo base_url('department/') ?>">Deparment</a></li>
+                <?php endif; ?>
+
               </ul>
             </div>
           </div>

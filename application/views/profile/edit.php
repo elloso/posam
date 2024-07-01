@@ -314,7 +314,7 @@
             <div class="panel-heading bg-black">Asset</div>
               <div class="panel-body">
 
-                <ul class="chart-legend" style="height:230px">
+                <ul class="chart-legend" style="height:250px">
 
                   <table class="table table-responsive">
                     <thead>
@@ -422,7 +422,7 @@
             <div class="panel-heading bg-black">Employee / Requisition</div>
               <div class="panel-body">
 
-                <ul class="chart-legend" style="height:230px">
+                <ul class="chart-legend" style="height:250px">
 
                   <table class="table table-responsive">
                     <thead>
@@ -498,6 +498,22 @@
                         } ?>></td>
                         <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="deletePosition" <?php if($serialize_permission) {
                           if(in_array('deletePosition', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                      </tr>
+
+                      <tr>
+                        <td>Department</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="createDepartment" <?php if($serialize_permission) {
+                          if(in_array('createDepartment', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="updateDepartment" <?php if($serialize_permission) {
+                          if(in_array('updateDepartment', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="viewDepartment" <?php if($serialize_permission) {
+                          if(in_array('viewDepartment', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="deleteDepartment" <?php if($serialize_permission) {
+                          if(in_array('deleteDepartment', $serialize_permission)) { echo "checked"; } 
                         } ?>></td>
                       </tr>
 

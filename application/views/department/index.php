@@ -1,15 +1,15 @@
 <div class="content-wrapper">
   <section class="content-header">
-    <h1>Category</h1>
+    <h1>Department</h1>
     <ol class="breadcrumb">
       <li><a href="<?php echo base_url('setting') ?>"><i class="fa fa-dashboard">        
       </i>Home</a></li>
-      <li class="active">Category</li>
+      <li class="active">Department</li>
     </ol>
   </section>
 
 
-  <!---------------------------------------------  View ------------------------------------------------------------------>
+  <!-----------------------------------------------------------  View ------------------------------------------------------------------>
 
   <section class="content">
     <div class="row">
@@ -29,15 +29,14 @@
           </div>
         <?php endif; ?>
 
-        <?php if(in_array('createCategory', $user_permission)): ?>
-          <button class="btn btn-primary" data-toggle="modal" data-target="#addModal"><?php echo 'Add Category'; ?></button>
+        <?php if(in_array('createDepartment', $user_permission)): ?>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#addModal" onclick="createFunc()">Add Department</button>
           <?php endif; ?>
 
-        <?php if(in_array('viewCategory', $user_permission)): ?>
-           <?php echo '<a href="'.base_url('report_setting/report_setting/category').'" target="_blank" class="btn btn-success"><i class="fa fa-print"></i></a>'; ?>
+        <?php if(in_array('viewDepartment', $user_permission)): ?>
+           <?php echo '<a href="'.base_url('report_setting/report_setting/position').'" target="_blank" class="btn btn-success"><i class="fa fa-print"></i></a>'; ?>
           <br /> <br />
         <?php endif; ?>
-
 
         <div class="box">
           <div class="box-header"></div>
@@ -46,9 +45,9 @@
               <thead>
               <tr>                
                 <th>Name</th>
-                <th>Remarks</th>  
-                <th>Active</th>    
-                <?php if(in_array('updateCategory', $user_permission) || in_array('deleteCategory', $user_permission)): ?>
+                <th>Code</th>
+                <th>Active</th>
+                <?php if(in_array('updateDepartment', $user_permission) || in_array('deleteDepartment', $user_permission)): ?>
                   <th>Action</th>
                 <?php endif; ?>
               </tr>
@@ -65,38 +64,46 @@
 
 
 
-<!---------------------------------------------------------  Add ------------------------------------------------------------------>
 
-<?php if(in_array('createCategory', $user_permission)): ?>
+<!-----------------------------------------------------------  Add ------------------------------------------------------------------>
+
+<?php if(in_array('createDepartment', $user_permission)): ?>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Add Category</h4>
+        <h4 class="modal-title">Add Department</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('category/create') ?>" method="post" id="createForm">
+      <form role="form" action="<?php echo base_url('position/create') ?>" method="post" id="createForm">
 
         <div class="modal-body">
 
-          <div class="form-group">
-            <label for="category_name">Name<font color="red"> *</font></label>
-            <input type="text" class="form-control" id="category_name" name="category_name" autocomplete="off">
-          </div>
+          <div class="row">
+
+             <div class="col-md-4 col-xs-4">
+              <div class="form-group">
+                <label for="department_code">Code<font color="red"> *</font></label>
+                <input type="text" class="form-control" id="department_code" name="department_code" maxlength="10" autocomplete="off">
+              </div>
+            </div>  
+
+            <div class="col-md-2 col-xs-2"></div>
+
+            <div class="col-md-6 col-xs-6" align="center">
+              <div class="radio">
+                  <label><input type="radio" name="active" id="active" value="1" checked="checked" >Active&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <label><input type="radio" name="active" id="active" value="2" >Inactive</label>
+              </div>
+            </div>
+          </div>     
 
           <div class="form-group">
-            <label for="category_remark">Remarks<font color="red"> *</font></label>
-            <input type="text" class="form-control" id="category_remark" name="category_remark" autocomplete="off">
-          </div>
-
-          <div class="radio">
-              <label><input type="radio" name="active" id="active" value="1" checked="checked" >
-                Active&nbsp;&nbsp;&nbsp;&nbsp;</label>
-              <label><input type="radio" name="active" id="active" value="2" >
-                Inactive</label>
-          </div>
+            <label for="department_name">Name<font color="red"> *</font></label>
+            <input type="text" class="form-control" id="department_name" name="department_name" autocomplete="off">
+          </div>          
 
         </div>
 
@@ -113,41 +120,49 @@
 <?php endif; ?>
 
 
-<!-------------------------------------------------------  Edit ------------------------------------------------------------------>
+<!-----------------------------------------------------------  Edit ------------------------------------------------------------------>
 
 
-<?php if(in_array('updateCategory', $user_permission)): ?>
+<?php if(in_array('updateDepartment', $user_permission)): ?>
 <!-- edit modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="editModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Edit Category</h4>
+        <h4 class="modal-title">Edit Department</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('category/update') ?>" method="post" id="updateForm">
+      <form role="form" action="<?php echo base_url('position/update') ?>" method="post" id="updateForm">
 
         <div class="modal-body">
           <div id="messages"></div>
 
-          <div class="form-group">
-            <label for="edit_category_name">Name<font color="red"> *</font></label>
-            <input type="text" class="form-control" id="edit_category_name" name="edit_category_name" autocomplete="off">
-          </div>
+          <div class="row">
+
+             <div class="col-md-4 col-xs-4">
+              <div class="form-group">
+                <label for="edit_department_code">Code<font color="red"> *</font></label>
+                <input type="text" class="form-control" id="edit_department_code" name="edit_department_code" maxlength="10"  autocomplete="off">
+              </div>              
+            </div>
+
+            <div class="col-md-2 col-xs-2"></div>
+
+            <div class="col-md-6 col-xs-6" align="center">
+              <div class="radio">
+                <label><input type="radio" name="edit_active" id="edit_active" value="1" >Active&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <label><input type="radio" name="edit_active" id="edit_inactive" value="2" >Inactive</label>
+              </div>
+            </div>
+
+          </div>    
 
           <div class="form-group">
-            <label for="edit_category_remark">Remarks<font color="red"> *</font></label>
-            <input type="text" class="form-control" id="edit_category_remark" name="edit_category_remark" autocomplete="off">
+            <label for="edit_department_name">Name<font color="red"> *</font></label>
+            <input type="text" class="form-control" id="edit_department_name" name="edit_department_name" autocomplete="off">
           </div>
-
-          <div class="radio">
-              <label><input type="radio" name="edit_active" id="edit_active" value="1" >
-                Active&nbsp;&nbsp;&nbsp;&nbsp;</label>
-              <label><input type="radio" name="edit_active" id="edit_inactive" value="2" >
-                Inactive</label>
-          </div>
-
         </div>
 
         <div class="modal-footer">
@@ -164,17 +179,17 @@
 
 <!-----------------------------------------------------------  Delete  ------------------------------------------------------------------>
 
-<?php if(in_array('deleteCategory', $user_permission)): ?>
-<!-- word -->
+<?php if(in_array('deleteDepartment', $user_permission)): ?>
+<!-- remove employee modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="removeModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Delete Category</h4>
+        <h4 class="modal-title">Delete Department</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('category/remove') ?>" method="post" id="removeForm">
+      <form role="form" action="<?php echo base_url('position/remove') ?>" method="post" id="removeForm">
         <div class="modal-body">
           <p>Do you really want to delete?</p>
         </div>
@@ -191,21 +206,21 @@
 <!-----------------------------------------------   Javascript  ---------------------------------------------------------------->
 
 <script type="text/javascript">
-  
+
 //--> Composing the list  
 var manageTable;
 
-  $("#categoryNav").addClass('active');
+  $("#departmentNav").addClass('active');
 
   // initialize the datatable 
   manageTable = $('#manageTable').DataTable({
-    'ajax': 'fetchCategoryData',
+    'ajax': 'fetchDepartmentData',
     'order': [[0, 'asc']]
   });
 
 
 
-  //--> submit the create from 
+  // submit the create from 
   $("#createForm").unbind('submit').on('submit', function() {
     var form = $(this);
 
@@ -263,16 +278,29 @@ var manageTable;
   });
 
 
-//--> edit function
-function editFunc(category_id)
+
+function createFunc()
+{
+          $("#createForm")[0].reset();
+          $("#createForm .form-group").removeClass('has-error').removeClass('has-success');  
+          $(".text-danger").remove();
+}
+
+
+// edit function
+function editFunc(position_id)
 { 
+  $("#updateForm")[0].reset();
+  $("#updateForm .form-group").removeClass('has-error').removeClass('has-success');  
+  $(".text-danger").remove(); 
   $.ajax({
-    url: 'fetchCategoryDataById/'+category_id,
+    url: 'fetchDepartmentDataById/'+position_id,
     type: 'post',
     dataType: 'json',
     success:function(response) {
     
-      $("#edit_category_name").val(response.category_name);
+      $("#edit_position_code").val(response.position_code);
+      $("#edit_position_name").val(response.position_name);
       if(response.active==1){
           $('input:radio[id=edit_active]')[0].checked = true;     
           $('input:radio[id=edit_inactive]')[0].checked = false;            
@@ -280,7 +308,6 @@ function editFunc(category_id)
           $('input:radio[id=edit_active]')[0].checked = false;
           $('input:radio[id=edit_inactive]')[0].checked = true;
         }   
-
 
       // submit the edit from 
       $("#updateForm").unbind('submit').bind('submit', function() {
@@ -290,7 +317,7 @@ function editFunc(category_id)
         $(".text-danger").remove();
 
         $.ajax({
-          url: form.attr('action') + '/' + category_id,
+          url: form.attr('action') + '/' + position_id,
           type: form.attr('method'),
           data: form.serialize(), // /converting the form data into array and sending it to server
           dataType: 'json',
@@ -341,10 +368,11 @@ function editFunc(category_id)
   });
 }
 
-//--> remove functions 
-function removeFunc(category_id)
+
+// remove functions 
+function removeFunc(position_id)
 {
-  if(category_id) {
+  if(position_id) {
     $("#removeForm").on('submit', function() {
 
       var form = $(this);
@@ -355,7 +383,7 @@ function removeFunc(category_id)
       $.ajax({
         url: form.attr('action'),
         type: form.attr('method'),
-        data: { category_id:category_id }, 
+        data: { position_id:position_id }, 
         dataType: 'json',
         success:function(response) {
 

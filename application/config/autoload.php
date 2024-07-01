@@ -153,6 +153,7 @@ $autoload['model'] = array(
 	'model_organization',
 	'model_payment',
 	'model_position',
+	'model_department',
 	'model_profile',
 	'model_report',
 	'model_employee',

@@ -50,7 +50,7 @@
                   <div class="col-md-2 col-xs-2">
                     <div class="form-group">
                       <label for="password">Password <font color="red">*</font></label>
-                      <input type="text" class="form-control" id="password" name="password" autocomplete="off">
+                      <input type="password" class="form-control" id="password" name="password" autocomplete="off">
                     </div>
                   </div>  
                   <div class="col-md-2 col-xs-2">

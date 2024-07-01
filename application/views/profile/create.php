@@ -213,7 +213,7 @@
             <div class="panel-heading bg-black">Asset</div>
               <div class="panel-body">
 
-                <ul class="chart-legend" style="height:230px">
+                <ul class="chart-legend" style="height:250px">
 
                   <table class="table table-responsive">
                     <thead>
@@ -281,7 +281,7 @@
             <div class="panel-heading bg-black">Employee / Requisition</div>
               <div class="panel-body">
 
-                <ul class="chart-legend" style="height:230px">
+                <ul class="chart-legend" style="height:250px">
 
                   <table class="table table-responsive">
                     <thead>
@@ -326,6 +326,13 @@
                         <td><input type="checkbox" name="permission[]" id="permission" value="viewPosition" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="deletePosition" class="minimal"></td>
                       </tr> 
+                      <tr>
+                        <td>Department</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="createDepartment" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="updateDepartment" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewDepartment" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="deleteDepartment" class="minimal"></td>
+                      </tr>
 
                        <tr>
                         <td>Requisition</td>
