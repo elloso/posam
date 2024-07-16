@@ -77,7 +77,7 @@
         <h4 class="modal-title">Add Department</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('position/create') ?>" method="post" id="createForm">
+      <form role="form" action="<?php echo base_url('department/create') ?>" method="post" id="createForm">
 
         <div class="modal-body">
 
@@ -101,7 +101,7 @@
           </div>     
 
           <div class="form-group">
-            <label for="department_name">Name<font color="red"> *</font></label>
+            <label for="department_name">Department<font color="red"> *</font></label>
             <input type="text" class="form-control" id="department_name" name="department_name" autocomplete="off">
           </div>          
 
@@ -134,7 +134,7 @@
         <h4 class="modal-title">Edit Department</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('position/update') ?>" method="post" id="updateForm">
+      <form role="form" action="<?php echo base_url('department/update') ?>" method="post" id="updateForm">
 
         <div class="modal-body">
           <div id="messages"></div>
@@ -189,7 +189,7 @@
         <h4 class="modal-title">Delete Department</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('position/remove') ?>" method="post" id="removeForm">
+      <form role="form" action="<?php echo base_url('department/remove') ?>" method="post" id="removeForm">
         <div class="modal-body">
           <p>Do you really want to delete?</p>
         </div>
@@ -288,19 +288,19 @@ function createFunc()
 
 
 // edit function
-function editFunc(position_id)
+function editFunc(department_id)
 { 
   $("#updateForm")[0].reset();
   $("#updateForm .form-group").removeClass('has-error').removeClass('has-success');  
   $(".text-danger").remove(); 
   $.ajax({
-    url: 'fetchDepartmentDataById/'+position_id,
+    url: 'fetchDepartmentDataById/'+department_id,
     type: 'post',
     dataType: 'json',
     success:function(response) {
     
-      $("#edit_position_code").val(response.position_code);
-      $("#edit_position_name").val(response.position_name);
+      $("#edit_department_code").val(response.department_code);
+      $("#edit_department_name").val(response.department_name);
       if(response.active==1){
           $('input:radio[id=edit_active]')[0].checked = true;     
           $('input:radio[id=edit_inactive]')[0].checked = false;            
@@ -317,7 +317,7 @@ function editFunc(position_id)
         $(".text-danger").remove();
 
         $.ajax({
-          url: form.attr('action') + '/' + position_id,
+          url: form.attr('action') + '/' + department_id,
           type: form.attr('method'),
           data: form.serialize(), // /converting the form data into array and sending it to server
           dataType: 'json',
@@ -370,9 +370,9 @@ function editFunc(position_id)
 
 
 // remove functions 
-function removeFunc(position_id)
+function removeFunc(department_id)
 {
-  if(position_id) {
+  if(department_id) {
     $("#removeForm").on('submit', function() {
 
       var form = $(this);
@@ -383,7 +383,7 @@ function removeFunc(position_id)
       $.ajax({
         url: form.attr('action'),
         type: form.attr('method'),
-        data: { position_id:position_id }, 
+        data: { department_id:department_id }, 
         dataType: 'json',
         success:function(response) {
 

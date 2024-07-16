@@ -112,6 +112,7 @@ public function create()
         'employee_status_fk' => (($this->input->post('employee_status') != FALSE) ? $this->input->post('employee_status') : NULL),
         'municipality_fk' => (($this->input->post('municipality') != FALSE) ? $this->input->post('municipality') : NULL),    
         'position_fk' => (($this->input->post('position') != FALSE) ? $this->input->post('position') : NULL),  
+        'department_fk' => (($this->input->post('department') != FALSE) ? $this->input->post('department') : NULL),  
         'address' => (($this->input->post('address') != FALSE) ? $this->input->post('address') : NULL),
         'birthday' => (($this->input->post('birthday') != FALSE) ? $this->input->post('birthday') : NULL),
         'email' => (($this->input->post('email') != FALSE) ? $this->input->post('email') : NULL),
@@ -162,6 +163,7 @@ public function create()
         $this->data['employee_type'] = $this->model_employee_type->getActiveEmployeeType();
         $this->data['employee_status'] = $this->model_employee_status->getActiveEmployeeStatus();
         $this->data['position'] = $this->model_position->getActivePosition(); 
+        $this->data['department'] = $this->model_department->getActiveDepartment(); 
 
         $generate_code = $this->model_employee->generateEmployeeCode();
         $this->data['generate_code'] = $generate_code;     	

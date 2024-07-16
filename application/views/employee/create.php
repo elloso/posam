@@ -137,17 +137,28 @@
             </div>
           </div>
 
-           <div class="col-md-3 col-xs-3">
+          <div class="col-md-3 col-xs-3">
+            <div class="form-group">
+              <label>Department</label>
+              <select class="form-control select_group" name="department">
+                <option value=""></option> 
+                <?php foreach ($department as $k => $v): ?>
+                <option value="<?php echo $v['department_id'] ?>" <?php echo set_select('department', $v['department_id']); ?>><?php echo $v['department_name'] ?></option>
+                <?php endforeach ?>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+        <div class="col-md-3 col-xs-3">
             <div class="form-group">
               <label for="birthday">Birthday</label>
               <input type="date" class="form-control" id="birthday" name="birthday"  autocomplete="off" 
               value="<?php echo set_value('birthday'); ?>"/>
             </div>
           </div>
-
-        </div>
-
-        <div class="row">
 
             <div class="col-md-3 col-xs-3">
             <div class="form-group">
@@ -173,18 +184,20 @@
             </div>
           </div>
 
-           <div class="col-md-3 col-xs-3">
+         
+
+         </div>
+
+
+        <div class="row">        
+          
+        <div class="col-md-3 col-xs-3">
             <div class="form-group">
               <label for="pag_ibig">PAG-IBIG</label>
               <input type="text" class="form-control" id="pag_ibig" name="pag_ibig"  autocomplete="off" 
               value="<?php echo set_value('pag_ibig'); ?>"/>
             </div>
           </div>
-
-         </div>
-
-
-        <div class="row">          
 
          <div class="col-md-3 col-xs-3">
             <div class="form-group">
@@ -226,12 +239,6 @@
             </div>
           </div>
 
-        </div>
-
-        
-
-        <div class="row">
-
           <div class="col-md-3 col-xs-3">
             <div class="form-group">
               <label for="phone">Phone</label>
@@ -247,16 +254,16 @@
               <input type="text" class="form-control" id="email" name="email"  autocomplete="off" 
               value="<?php echo set_value('email'); ?>"/>
             </div>
-          </div>                 
+          </div>  
 
-          <div class="col-md-6 col-xs-6">
-             <div class="form-group">
-              <label for="remark">Remark</label>
-              <textarea type="text" class="form-control" rows="3" id="remark" name="remark" autocomplete="off"><?php echo set_value('remark'); ?></textarea>
-            </div>
-          </div> 
+          <div class="col-md-3 col-xs-3">
+            <div class="form-group">
+            <label for="remark">Remark</label>
+            <textarea type="text" class="form-control" rows="3" id="remark" name="remark" autocomplete="off"><?php echo set_value('remark'); ?></textarea>
+          </div>
+        </div> 
 
-      </div>
+        </div>
 
        <div class="box-footer">
               <button type="submit" class="btn btn-primary">Save</button>
